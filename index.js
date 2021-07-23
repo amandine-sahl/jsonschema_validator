@@ -1,4 +1,6 @@
 const core = require('@actions/core');
+const fs = require('fs');
+
 
 const schema_path = core.getInput('main_schema_path');
 const schemas_path = core.getInput('additional_schemas_path');
@@ -9,8 +11,7 @@ const addFormats = require("ajv-formats");
 const ajv = new Ajv({allErrors: true, strict: false});
 addFormats(ajv);
 
-let fs = require('fs');
-let add_schemas = fs.readdirSync(__dirname + schemas_path);
+let add_schemas = fs.readdirSync(schemas_path);
 
 for (let add_schema of add_schemas) {
     path = schemas_path + add_schema

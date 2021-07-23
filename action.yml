@@ -4,15 +4,15 @@ inputs:
   main_schema_path:  # id of input
     description: 'Path to the main schema'
     required: true
-    default: './schema.json'
+    default: '/schema.json'
   additional_schemas_path:  # id of input
     description: 'Path to the folder containing the $refs schemas'
     required: true
-    default: './additional_schemas/'
+    default: '/additional_schemas/'
   data_path:  # id of input
     description: 'Path to the JSON file to validate'
     required: true
-    default: './data.json'
+    default: '/data.json'
 outputs:
   validity: # output will be available to future steps
     description: 'Validity of the data according to the schema'
