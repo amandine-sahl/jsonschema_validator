@@ -10,7 +10,7 @@ const ajv = new Ajv({allErrors: true, strict: false});
 addFormats(ajv);
 
 let fs = require('fs');
-let add_schemas = fs.readdirSync(schemas_path);
+let add_schemas = fs.readdirSync(__dirname + schemas_path);
 
 for (let add_schema of add_schemas) {
     path = schemas_path + add_schema
