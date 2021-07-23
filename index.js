@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const schema_path = core.getInput('main_schema_path');
 const schemas_dir = core.getInput('additional_schemas_dir');
-const data = core.getInput('data_path');
+const data_path = core.getInput('data_path');
 
 const Ajv = require("ajv");
 const addFormats = require("ajv-formats");
