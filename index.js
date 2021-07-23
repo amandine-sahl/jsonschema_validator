@@ -15,7 +15,7 @@ addFormats(ajv);
 let add_schemas = fs.readdirSync(path.join(process.env.GITHUB_WORKSPACE, schemas_path);
 
 for (let add_schema of add_schemas) {
-    add_schema_path = schemas_path + add_schema
+    add_schema_path = '/' + schemas_path + add_schema
     ajv.addSchema(require(add_schema_path), add_schema);
 };
 
