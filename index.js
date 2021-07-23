@@ -1,5 +1,6 @@
 const core = require('@actions/core');
 const fs = require('fs');
+const path = require('path');
 
 
 const schema_path = core.getInput('main_schema_path');
@@ -11,11 +12,11 @@ const addFormats = require("ajv-formats");
 const ajv = new Ajv({allErrors: true, strict: false});
 addFormats(ajv);
 
-let add_schemas = fs.readdirSync(schemas_path);
+let add_schemas = fs.readdirSync(path.join(process.env.GITHUB_WORKSPACE, schemas_path);
 
 for (let add_schema of add_schemas) {
-    path = schemas_path + add_schema
-    ajv.addSchema(require(path), add_schema);
+    add_schema_path = schemas_path + add_schema
+    ajv.addSchema(require(add_schema_path), add_schema);
 };
 
 const schema = require(schema_path);
