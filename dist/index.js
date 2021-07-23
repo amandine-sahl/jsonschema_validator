@@ -1,4 +1,4 @@
-/******/ (() => { // webpackBootstrap
+require('./sourcemap-register.js');/******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
 /***/ 2228:
@@ -8087,9 +8087,12 @@ var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
 const core = __nccwpck_require__(5127);
+const fs = __nccwpck_require__(5747);
+//const path = require('path');
+
 
 const schema_path = core.getInput('main_schema_path');
-const schemas_path = core.getInput('additional_schemas_path');
+const schemas_dir = core.getInput('additional_schemas_dir');
 const data = core.getInput('data_path');
 
 const Ajv = __nccwpck_require__(9490);
@@ -8097,12 +8100,11 @@ const addFormats = __nccwpck_require__(6759);
 const ajv = new Ajv({allErrors: true, strict: false});
 addFormats(ajv);
 
-let fs = __nccwpck_require__(5747);
-let add_schemas = fs.readdirSync(schemas_path);
+let add_schemas = fs.readdirSync(schemas_dir);
 
 for (let add_schema of add_schemas) {
-    path = schemas_path + add_schema
-    ajv.addSchema(require(path), add_schema);
+    add_schema_path = schemas_dir + add_schema
+    ajv.addSchema(require(add_schema_path), add_schema);
 };
 
 const schema = require(schema_path);
@@ -8120,3 +8122,4 @@ function test(data) {
 module.exports = __webpack_exports__;
 /******/ })()
 ;
+//# sourceMappingURL=index.js.map
