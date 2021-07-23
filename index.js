@@ -1,21 +1,29 @@
 const core = require('@actions/core');
-const wait = require('./wait');
 
+const schema_path = core.getInput('main_schema_path');
+const schemas_path = core.getInput('additional_schemas_path');
+const data = core.getInput('data_path');
 
-// most @actions toolkit packages have async methods
-async function run() {
-  try {
-    const ms = core.getInput('milliseconds');
-    core.info(`Waiting ${ms} milliseconds ...`);
+const Ajv = require("ajv");
+const addFormats = require("ajv-formats");
+const ajv = new Ajv({allErrors: true, strict: false});
+addFormats(ajv);
 
-    core.debug((new Date()).toTimeString()); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
-    await wait(parseInt(ms));
-    core.info((new Date()).toTimeString());
+let fs = require('fs');
+let add_schemas = fs.readdirSync(schemas_path);
 
-    core.setOutput('time', new Date().toTimeString());
-  } catch (error) {
-    core.setFailed(error.message);
-  }
-}
+for (let add_schema of add_schemas) {
+    path = schemas_path + add_schema
+    ajv.addSchema(require(path), add_schema);
+};
 
-run();
+const schema = require(schema_path);
+const validate = ajv.compile(schema);
+
+test(require(data_path));
+
+function test(data) {
+  const valid = validate(data);
+  if (valid) core.setOutput('validity', "Valid!")
+    else core.setOutput('validity', "Invalid: " + ajv.errorsText(validate.errors))
+};

@@ -1,13 +1,21 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'Validate'
+description: 'Validate data with a schema and his referenced schemas'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  main_schema_path:  # id of input
+    description: 'Path to the main schema'
     required: true
-    default: '1000'
+    default: './schema.json'
+  additional_schemas_path:  # id of input
+    description: 'Path to the folder containing the $refs schemas'
+    required: true
+    default: './additional_schemas/'
+  data_path:  # id of input
+    description: 'Path to the JSON file to validate'
+    required: true
+    default: './data.json'
 outputs:
-  time: # output will be available to future steps
-    description: 'The message to output'
+  validity: # output will be available to future steps
+    description: 'Validity of the data according to the schema'
 runs:
   using: 'node12'
   main: 'dist/index.js'
